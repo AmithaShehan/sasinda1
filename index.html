@@ -91,6 +91,9 @@
           </li>
           </li>
           <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="./assets/Darukeesan_CV.pdf" download="">CV</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
           </li>
         </ul>
@@ -329,9 +332,18 @@
     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="contact">
         <div class="my-auto">
           <h2 class="mb-5">Contact</h2>
+          <form name="submit-to-google-sheet">
+            <input type="text" name="Name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="Message"  rows="6" placeholder="Message"></textarea>
+            <br>
+            <button class="btn">Submit</button>
+          </form>
+          <span id="msg"></span>
         </div>
       </section>
     </div>
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -342,5 +354,24 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/resume.min.js"></script>
+
+    <script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxeQTKHXP30oVn9wJmUIG2VTPv79Ei29vcfS31E37JRCNmlYeNafZI22XhyShjWae1W/exec'
+  const form = document.forms['submit-to-google-sheet']
+  const msg = document.getElementById("msg")
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {msg.innerHTML = "Message Sent Successfully"
+      setTimeout(function(){
+        msg.innerHTML = ""
+      },5000)
+      form.reset()
+    })
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
   </body>
+
 </html>
